@@ -18,11 +18,10 @@ import "github.com/bubblestudent/gocolournamer"
 All of the packages funcioality is exposed in one method. ToNearestColour is called with a valid hex colour and returns the named struct and an error.
 
 ```go
-named, err := ToNearestColour(hexstring)
+named, err := gocolournamer.ToNearestColour(hexstring)
 ```
 
-
-
+Additional documentation available on godoc: http://godoc.org/github.com/bubblestudent/gocolournamer
 
 ## Inpsiration
 
