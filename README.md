@@ -25,7 +25,7 @@ Additional documentation available on godoc: http://godoc.org/github.com/bubbles
 
 ## Inpsiration
 
-Idea and colour list from http://chir.ag/projects/ntc/ javavcript implementation.
+Idea and colour list from http://chir.ag/projects/ntc/ javascript implementation.
 
 ## Lisence
 
