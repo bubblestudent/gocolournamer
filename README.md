@@ -23,6 +23,36 @@ named, err := gocolournamer.ToNearestColour(hexstring)
 
 Additional documentation available on godoc: http://godoc.org/github.com/bubblestudent/gocolournamer
 
+## Example program
+
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+
+	"github.com/bubblestudent/gocolournamer"
+)
+
+func main() {
+	hex := "#905E26" //hash is optional
+	named, err := gocolournamer.ToNearestColour(hex)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	out, _ := json.Marshal(named)
+	fmt.Printf("%s", string(out))
+}
+```
+
+The above program outputs
+
+```bash
+{"hex":"905E26","colour":"Afghan Tan","hue":"Yellow","huehex":"FFFF00"}
+```
+
 ## Inpsiration
 
 Idea and colour list from http://chir.ag/projects/ntc/ javascript implementation.
