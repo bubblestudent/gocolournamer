@@ -88,10 +88,10 @@ func TestToNearestColour(t *testing.T) {
 		{
 			"Valid Colour - slightly off match",
 			args{
-				"7D9D72",
+				"7D9D73",
 			},
 			Named{
-				Hex:    "7D9D72",
+				Hex:    "7D9D73",
 				Colour: "Amulet",
 				Hue:    "Green",
 				Huehex: "008000",
