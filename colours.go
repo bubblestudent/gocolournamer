@@ -17,7 +17,7 @@ type (
 		Huehex string `json:"huehex"`
 	}
 
-	//colour store all information about one colour
+	//colour stores all information about one colour
 	colour struct {
 		hex    string
 		colour string
@@ -54,6 +54,7 @@ func populate() {
 
 //ToNearestColour takes a hex string and returns a named object
 //hex string may have an optional leading hash, followed by 3 or 6 characters in range [0-9, A-F]
+//Named object contains the closet matched colour (calculated from RGB and HSL distances)
 func ToNearestColour(hex string) (names Named, err error) {
 	hex, err = validHex(hex)
 	if err != nil {
@@ -66,6 +67,7 @@ func ToNearestColour(hex string) (names Named, err error) {
 	var ndf, ndf1, ndf2 float64
 	var df float64 = -1
 
+	//check each colour for exact or closest match
 	for _, v := range colours {
 		if hex == v.hex {
 			names.Colour = v.colour
@@ -74,9 +76,13 @@ func ToNearestColour(hex string) (names Named, err error) {
 			return
 		}
 
+		//root-mean-square deviation from RGB
 		ndf1 = math.Pow(float64(r-v.r), 2) + math.Pow(float64(g-v.g), 2) + math.Pow(float64(b-v.b), 2)
+		//root-mean-square deviation from HSL
 		ndf2 = math.Pow(h-v.h, 2) + math.Pow(s-v.s, 2) + math.Pow(l-v.l, 2)
 		ndf = ndf1 + ndf2*2
+
+		//if coloser to this colour than any previous colour
 		if df < 0 || df > ndf {
 			df = ndf
 			names.Colour = v.colour
@@ -121,6 +127,7 @@ func hsl(ri, gi, bi int64) (h, s, l float64) {
 	delta := max - min
 	l = (min + max) / 2
 
+	//Conversion formula from http://www.rapidtables.com/convert/color/rgb-to-hsl.htm
 	s = 0
 	if l > 0 && l < 1 {
 		if l < 0.5 {
@@ -140,10 +147,10 @@ func hsl(ri, gi, bi int64) (h, s, l float64) {
 		}
 		h = math.Floor((h * 60) + 0.5)
 	}
-	l *= 1000
-	l = math.Floor(l+0.5) / 10
-	s *= 1000
-	s = math.Floor(s+0.5) / 10
+
+	//times numbers be 100 whilst rounding them correctly (hence * 1000 then / 10)
+	l = math.Floor((l*1000)+0.5) / 10
+	s = math.Floor((s*1000)+0.5) / 10
 	return
 }
 
@@ -159,6 +166,7 @@ func shade(shadename string) (hex string) {
 	return
 }
 
+//shades is an array of general shades/hues and their hex codes.
 var shades = []hueShade{
 	{hex: "FF0000", name: "Red"},
 	{hex: "FFA500", name: "Orange"},
